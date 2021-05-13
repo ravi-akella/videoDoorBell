@@ -60,7 +60,7 @@ class CamVideoStream:
                     #self.camData.img = copy.deepcopy(self.frame)
                     gray_image = cv2.cvtColor(self.frame, cv2.COLOR_BGR2GRAY)
                     self.camData.rgb = cv2.cvtColor(self.frame,cv2.COLOR_BGR2RGB)
-                    self.face_roi = self.face_cascade.detectMultiScale(gray_image, 1.1, 4)
+                    self.face_roi = self.face_cascade.detectMultiScale(gray_image, 1.3, 4)
                     self.camData.faces_rect = copy.deepcopy(self.face_roi)
                     
                     #print("(Producer):sent frame")
@@ -69,7 +69,7 @@ class CamVideoStream:
                     print("Camera queue (q) full")
             end = datetime.now()
             fps = 1/((end-start).total_seconds())
-            #print("fps cam stream = %.2f"%fps)
+            print("fps cam stream = %.2f"%fps)
             
     def read(self):
         return (self.grabbed, self.frame)
@@ -260,7 +260,7 @@ while True:
             break
         end = datetime.now()
         fps = 1/((end-start).total_seconds())
-        #print("display fps = %.2f"%fps)
+        print("display fps = %.2f"%fps)
 
 cam.stop()
 face_recog.stop()
