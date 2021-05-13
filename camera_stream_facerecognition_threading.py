@@ -69,7 +69,7 @@ class CamVideoStream:
                     print("Camera queue (q) full")
             end = datetime.now()
             fps = 1/((end-start).total_seconds())
-            print("fps cam stream = %.2f"%fps)
+            #print("fps cam stream = %.2f"%fps)
             
     def read(self):
         return (self.grabbed, self.frame)
@@ -143,7 +143,7 @@ class FaceRecognition:
                         new_q.put(self.face_data)
                         end = datetime.now()
                         fps = 1/((end-start).total_seconds())
-                        print("face recognition fps = %.2f"%fps)
+                        #print("face recognition fps = %.2f"%fps)
                 else:
                     #self.face_data.img = img
                     self.face_data.boxes = []
@@ -173,7 +173,7 @@ class FaceRecognition:
         self.names = []
         #returns the names of faces recognised in the image stream
         for encoding in self.unknown_encodings:
-            matches = face_recognition.compare_faces(self.data['encodings'],encoding,tolerance = 0.08)
+            matches = face_recognition.compare_faces(self.data['encodings'],encoding,tolerance = 0.06)
     #         if True in matches:
     #             names.append('ravi')
     #         else:
@@ -192,7 +192,13 @@ class FaceRecognition:
                     counts[known_name] = np.count_nonzero(matches[index])
                     
                 print(counts)
-                name = max(counts, key = counts.get)
+                #get max of counts, find index of max count, find key of that index to get name of person with max match
+                counts_values = list(counts.values())
+                counts_keys = list(counts.keys())
+                #we found a good match
+                if max(counts_values)>100:
+                    
+                    name = counts_keys[counts_values.index(max(counts_values))]
             self.names.append(name)
             
         return self.names
@@ -222,6 +228,7 @@ while True:
         face_data = new_q.get()
         names_to_display = face_data.names
         print("non analyzed frames = %s"%non_analyzed_frames)
+        non_analyzed_frames = 0
         
     else:
         #print("No face_recognition frames to display recognised faces")
@@ -253,7 +260,7 @@ while True:
             break
         end = datetime.now()
         fps = 1/((end-start).total_seconds())
-        print("display fps = %.2f"%fps)
+        #print("display fps = %.2f"%fps)
 
 cam.stop()
 face_recog.stop()
