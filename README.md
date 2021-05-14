@@ -15,6 +15,12 @@ save_known_faces.py => Use to save known faces images to ./refImages folder so t
 
 socketserver.py => Library used in rpi_camera_surveillance_system.py => had difficulty installing by pip so copied the file to import into program
 
+create_audio_files_for_known_faces.py => Creates audio files for known faces images jpg files found leverages on google text to speech.
+
+face_recognition_with_audio_output.py => Face recognition running in multiple threads with name of person recognised being output on audio.
+
+send_email.py=> program to send email, email credentials are read from pickle file.
+
 write_face_encodings.py => opens Images present in ./refImages folder and computes the face encodings using face_recognition library, and saves the encodings to ./refImages/encodings.pickle, these encodings are loaded
 by face_recognition demo & compared with camera stream to recognise faces.
 
@@ -22,7 +28,7 @@ How to run face recognition demo?
 In order to run face recognition demo you can either use: 
   1) camera_stream_face_recognition.py (face_recognition running in a single thread)
   2) camera_stream_face_recognition_threading.py (face_recognition running in multiple threads)
-  
+  3) face_recognition_with_audio_output.py (face_recognition running in multiple threads with audio output of person recognised)  
 To run either of the above 2 face recognition programs with threading or without threading you can follow the below sequence:
 1) Create a directory refImages inside the root directory (used to store the face encodings and known faces images)
 2) Run the script save_known_faces.py to save known people images. Run the script as many times as the no of persons to recognise to save each persons image as a seperate file
